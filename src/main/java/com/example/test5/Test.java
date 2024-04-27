@@ -3,6 +3,7 @@ package com.example.test5;
 import com.example.test1.User;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Test {
     public static void main(String[] args) {
@@ -22,12 +23,13 @@ public class Test {
                 .filter(a -> a.getScore() <= score)
                 .toList();
     }
-    public static String stuGroupByClazzAndScore(List<Student>list, String calzz, int score){
+    public static List<String> stuGroupByClazzAndScore(List<Student>list, String calzz, int score){
         return StreamTest.create()
                 .stream()
                 .filter(a -> a.getClazz().equals(calzz))
                 .filter(a -> a.getScore() <= score)
-                .toString();
+                .map(Student::getName)
+                .collect(Collectors.toList());
     }
     public static List<Student> stuGroupByScore(List<Student> list){
         return StreamTest.create()
@@ -43,13 +45,14 @@ public class Test {
                 .sorted(Comparator.comparing(Student::getScore))
                 .toList();
     }
-    public static Object[] stuGroupByClazzAndScoreAndGrade(List<Student> list, String clazz, int score){
+    public static List<Integer> stuGroupByClazzAndScoreAndGrade(List<Student> list, String clazz, int score){
         return StreamTest.create()
                 .stream()
                 .filter(a -> a.getClazz().equals(clazz))
                 .filter(a -> a.getScore() <= score)
-                .sorted(Comparator.comparing(Student::getScore))
-                .toArray();
+                .sorted(Comparator.comparing(Student::getScore).reversed())
+                .map(Student::getNumber)
+                .collect(Collectors.toList());
     }
 }
 /*public static Map<String, Student> group(List<Student> list){
